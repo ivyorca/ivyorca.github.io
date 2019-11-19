@@ -12,6 +12,7 @@ function clearInput() {
   document.getElementById("c_id").value = "";
   root2 = null;
   root3 = null;
+  console.log("reset");
   slider.noUiSlider.reset();
   updateChart();
 }
@@ -254,7 +255,7 @@ function updateChart() {
     .attr("transform", "translate(" + 50 + "," + 30 + ")");
 
 
-//     stratify_data(g_sampleData);
+    stratify_data(g_sampleData);
     // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
