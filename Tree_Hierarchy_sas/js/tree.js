@@ -253,7 +253,7 @@ function updateChart() {
     .attr("transform", "translate(" + 50 + "," + 30 + ")");
 
 
-    stratify_data(g_sampleData);
+//     stratify_data(g_sampleData);
     // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
@@ -264,7 +264,7 @@ function updateChart() {
     dataTable = root2;
     draw(dataTable, width, height);
   } else {
-    dataTable = root1 ? root1 : d_dataTable;
+    dataTable = root1 ? root1 : g_sampleData;
     console.log(dataTable);
     draw(dataTable, width, height);
   }
