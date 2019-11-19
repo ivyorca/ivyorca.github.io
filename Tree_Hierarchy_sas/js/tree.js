@@ -93,6 +93,7 @@ function filterSliderData(data) {
       filt_data_arr.push(filt_desc[b].data);
     }
   }
+  console.log("rooooot3");
   root3 = d3
     .stratify()
     .id(function(d) {
