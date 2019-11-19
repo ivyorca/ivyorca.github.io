@@ -256,7 +256,7 @@ function updateChart() {
     .attr("transform", "translate(" + 50 + "," + 30 + ")");
 
 
-//     stratify_data(g_sampleData);
+    stratify_data(d_dataTable);
     // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
