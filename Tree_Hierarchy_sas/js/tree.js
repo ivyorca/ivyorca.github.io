@@ -12,7 +12,6 @@ function clearInput() {
   document.getElementById("c_id").value = "";
   root2 = null;
   root3 = null;
-  slider.noUiSlider.reset();
   updateChart();
 }
 
@@ -225,7 +224,6 @@ function stratify_data(csv_data) {
       return d.p_id;
     })(csv_data);
   root1 = root;
-  console.log(root1);
   //  updateChart(root1);
 }
 
@@ -255,7 +253,8 @@ function updateChart() {
     .attr("transform", "translate(" + 50 + "," + 30 + ")");
 
 
-  // stratify_data(g_sampleData);
+    stratify_data(g_sampleData);
+    // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
     dataTable = root3;
@@ -265,14 +264,9 @@ function updateChart() {
     dataTable = root2;
     draw(dataTable, width, height);
   } else {
-    if(root1){
-      dataTable = root1;
-      draw(dataTable, width, height);
-    }else{
-      stratify_data(g_sampleData);
-      dataTable = root1;
-      draw(dataTable, width, height);
-    }
+    dataTable = root1 ? root1 : d_dataTable;
+    console.log(dataTable);
+    draw(dataTable, width, height);
   }
 }
 
