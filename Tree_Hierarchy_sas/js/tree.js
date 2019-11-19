@@ -13,7 +13,7 @@ function clearInput() {
 //   slider.noUiSlider.reset();
   root2 = null;
   root3 = null;
-  console.log("reset2");
+  console.log("reset3");
   updateChart();
 }
 
