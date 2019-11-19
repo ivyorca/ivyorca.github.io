@@ -10,10 +10,10 @@ var tooltip = d3
 
 function clearInput() {
   document.getElementById("c_id").value = "";
+  slider.noUiSlider.reset();
   root2 = null;
   root3 = null;
   console.log("reset");
-  slider.noUiSlider.reset();
   updateChart();
 }
 
