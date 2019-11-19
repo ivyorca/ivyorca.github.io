@@ -259,14 +259,18 @@ function updateChart() {
     // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
+    console.log("its 3");
     dataTable = root3;
     draw(dataTable, width, height);
   }
   else if (root2) {
+        console.log("its 2");
+
     dataTable = root2;
     draw(dataTable, width, height);
   } else {
     console.log("line268");
+        console.log("its 1");
     console.log(root1);
     dataTable = root1 ? root1 : g_sampleData;
     console.log(dataTable);
