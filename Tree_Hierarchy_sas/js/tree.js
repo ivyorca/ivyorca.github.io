@@ -225,6 +225,7 @@ function stratify_data(csv_data) {
       return d.p_id;
     })(csv_data);
   root1 = root;
+  console.log(root1);
   //  updateChart(root1);
 }
 
@@ -254,7 +255,7 @@ function updateChart() {
     .attr("transform", "translate(" + 50 + "," + 30 + ")");
 
 
-  stratify_data(g_sampleData);
+  // stratify_data(g_sampleData);
   dataTable = [];
   if (root3) {
     dataTable = root3;
@@ -264,8 +265,14 @@ function updateChart() {
     dataTable = root2;
     draw(dataTable, width, height);
   } else {
-    dataTable = root1 ? root1 : g_sampleData;
-    draw(dataTable, width, height);
+    if(root1){
+      dataTable = root1;
+      draw(dataTable, width, height);
+    }else{
+      stratify_data(g_sampleData);
+      dataTable = root1;
+      draw(dataTable, width, height);
+    }
   }
 }
 
