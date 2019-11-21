@@ -13,7 +13,6 @@ function clearInput() {
   slider.noUiSlider.reset();
   root2 = null;
   root3 = null;
-  console.log("reset3");
   updateChart();
 }
 
@@ -61,10 +60,10 @@ function initSliderFilter() {
 
   updateChart();
 }
-////////////////////////////////////////////////////////////weirdshit
+
 function filterSliderData(data) {
   var desc_arr = data.descendants();
-  var max_ht = data.height; //== data.height===max height ==//
+  var max_ht = data.height;
   var filt_desc = data.descendants().filter(function(d) {
     return (
       (parseInt(d.data.value) >= range1 && parseInt(d.data.value) <= range2) ||
@@ -93,7 +92,6 @@ function filterSliderData(data) {
       filt_data_arr.push(filt_desc[b].data);
     }
   }
-  console.log("rooooot3");
   root3 = d3
     .stratify()
     .id(function(d) {
@@ -102,12 +100,10 @@ function filterSliderData(data) {
     .parentId(function(d) {
       return d.p_id;
     })(filt_data_arr);
-  console.log(root3);
 }
 
 function searchTree(d) {
   if (d.children) d.children.forEach(searchTree);
-  // else if (d._children) d._children.forEach(searchTree);
   var searchFieldValue = eval(searchField); // searchFieldValue == d.id
   if (searchFieldValue && searchFieldValue.match(c_id)) {
     while (d.parent) {
@@ -209,14 +205,6 @@ function convertData(arrayData, columnsInfo) {
   stratify_data(d_dataTable);
 }
 
-function csv_parse() {
-  d3.csv(
-    "https://raw.githubusercontent.com/ivyorca/sas-visualanalytics-thirdpartyvisualizations/master/3nlevel_data.csv"
-  ).get(function(error, rows) {
-    stratify_data(rows);
-  });
-}
-
 function stratify_data(csv_data) {
   var root = d3
     .stratify()
@@ -227,7 +215,6 @@ function stratify_data(csv_data) {
       return d.p_id;
     })(csv_data);
   root1 = root;
-  //  updateChart(root1);
 }
 
 function updateChart() {
@@ -260,21 +247,14 @@ function updateChart() {
     // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
-    console.log("its 3");
     dataTable = root3;
     draw(dataTable, width, height);
   }
   else if (root2) {
-        console.log("its 2");
-
     dataTable = root2;
     draw(dataTable, width, height);
   } else {
-    console.log("line268");
-        console.log("its 1");
-    console.log(root1);
     dataTable = root1 ? root1 : g_sampleData;
-    console.log(dataTable);
     draw(dataTable, width, height);
   }
 }
