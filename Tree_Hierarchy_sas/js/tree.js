@@ -275,7 +275,9 @@ function draw(treeData, width, height) {
   var svg = d3.select("svg");
   // declares a tree layout and assigns the resize;
 
-  var treemap = d3.tree().size([width - 2, height - 2]);
+  var treemap = d3.tree().size([width - 2, height - 2]).separation(function(a,b){
+        return a.parent==b.parent?1:1
+    });// make separation accessor 1;
   //  assigns the data to a hierarchy using parent-child relationships
   var nodes = treeData;
   // maps the node data to the tree layout
