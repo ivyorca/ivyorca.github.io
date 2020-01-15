@@ -307,14 +307,14 @@ function draw(treeData, width, height) {
     .attr("stroke-width", function(d) {
       if (d.data.value) {
         var strokevar;
-        if ((d.data.value / 100) * 30 < 1) {
-          strokevar = 2.5;
+        if ((d.data.value / 100) * 15 < 0.8) {
+          strokevar = 0.5 ;
         } else {
-          strokevar = (d.data.value / 100) * 30;
+          strokevar = (d.data.value / 100) * 15;
         }
         return strokevar;
       } else {
-        return 5;
+        return 2.5;
       }
     })
     .attr("d", function(d) {
@@ -324,25 +324,25 @@ function draw(treeData, width, height) {
          + " " + d.parent.y + "," + d.parent.x;
        });
 
-  link
-    .append("text")
-    .attr("font-family", "Arial, Helvetica, sans-serif")
-    .attr("fill", "Black")
-    .attr("stroke", "Black")
-    .style("font", "normal 12px Arial")
-    .attr("transform", function(d) {
-      return "translate(" + d.y + "," + d.x + ")";
-    })
-    .attr("dy", ".35em")
-    .attr("y", function(d) {
-      return d.children ? -40 : 35;
-    })
-    .attr("text-anchor", "middle")
-    .text(function(d) {
-      if (d.data.value) {
-        return d.data.value + "%";
-      }
-    });
+  // link
+  //   .append("text")
+  //   .attr("font-family", "Arial, Helvetica, sans-serif")
+  //   .attr("fill", "Black")
+  //   .attr("stroke", "Black")
+  //   .style("font", "normal 12px Arial")
+  //   .attr("transform", function(d) {
+  //     return "translate(" + d.y + "," + d.x + ")";
+  //   })
+  //   .attr("dy", ".35em")
+  //   .attr("y", function(d) {
+  //     return d.children ? -40 : 35;
+  //   })
+  //   .attr("text-anchor", "middle")
+  //   .text(function(d) {
+  //     if (d.data.value) {
+  //       return d.data.value + "%";
+  //     }
+  //   });
   // adds each node as a group
   var node = svg
     .select("g")
