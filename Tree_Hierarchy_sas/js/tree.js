@@ -419,6 +419,7 @@ function eventHandlerFromVA(messageFromVA) {
   var arrayData = messageFromVA.data;
   var columnsInfo = messageFromVA.columns;
   convertData(arrayData, columnsInfo);
+  
   updateChart();
 }
 
