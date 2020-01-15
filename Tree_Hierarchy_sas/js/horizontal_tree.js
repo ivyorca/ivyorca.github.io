@@ -227,6 +227,7 @@ function updateChart() {
     left: 90
   };
 
+
   var width = window.innerWidth - margin.left - margin.right;
   var height = window.innerHeight - margin.top - margin.bottom;
 
@@ -264,6 +265,13 @@ function draw(treeData, width, height) {
   depthArray = [];
   dp1Array = [];
   var depths = treeData;
+
+  maxDepth = depths.height;
+  if((width/maxDepth)<130){
+    var width = maxDepth * 130;
+  }
+
+  console.log(treeData);
   for (var i = 1, ht = depths.height; i <= ht; i++) {
     depthArray[i] = i; //get the depth === 1 categories
   }
