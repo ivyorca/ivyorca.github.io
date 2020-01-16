@@ -35,7 +35,7 @@ noUiSlider.create(slider, {
   start: [0, 100],
   step: 10,
   connect: true,
-  behaviour:'drag',
+  behaviour: "drag",
   tooltips: [pctFormat, pctFormat],
   range: {
     min: 0,
@@ -227,7 +227,6 @@ function updateChart() {
     left: 90
   };
 
-
   var width = window.innerWidth - margin.left - margin.right;
   var height = window.innerHeight - margin.top - margin.bottom;
 
@@ -244,15 +243,13 @@ function updateChart() {
     .append("g")
     .attr("transform", "translate(" + 50 + "," + 30 + ")");
 
-
-    stratify_data(d_dataTable);
-    // console.log(d_dataTable);
+  stratify_data(d_dataTable);
+  // console.log(d_dataTable);
   dataTable = [];
   if (root3) {
     dataTable = root3;
     draw(dataTable, width, height);
-  }
-  else if (root2) {
+  } else if (root2) {
     dataTable = root2;
     draw(dataTable, width, height);
   } else {
@@ -266,12 +263,6 @@ function draw(treeData, width, height) {
   dp1Array = [];
   var depths = treeData;
 
-  maxDepth = depths.height;
-  if((width/maxDepth)<130){
-    var width = maxDepth * 130;
-  }
-
-  console.log(treeData);
   for (var i = 1, ht = depths.height; i <= ht; i++) {
     depthArray[i] = i; //get the depth === 1 categories
   }
@@ -281,13 +272,60 @@ function draw(treeData, width, height) {
     .domain(colorDomain)
     .range(d3.schemeSet2);
 
+  var newWidth;
+  maxDepth = depths.height;
+  if (width / maxDepth < 130) {
+    console.log("width " + width);
+    newWidth = (maxDepth + 1) * 130;
+  } else {
+    newWidth = width;
+  }
+  console.log(width);
+  //
+  // if (width < newWidth) {
+  //   d3.select("svg").attr("width", newWidth);
+  // }
+
+  var levelWidth = [1];
+  var childCount = function(level, n) {
+    if (n.children && n.children.length > 0) {
+      if (levelWidth.length <= level + 1) levelWidth.push(0);
+
+      levelWidth[level + 1] += n.children.length;
+      n.children.forEach(function(d) {
+        childCount(level + 1, d);
+      });
+    }
+  };
+  childCount(0, treeData);
+
+  if((height/d3.max(levelWidth))<28){
+      newHeight = d3.max(levelWidth) * 30;
+  }else{
+      newHeight = height;
+  }
+
+
+  // if (height < newHeight) {
+  //   d3.select("svg").attr("height", newHeight);
+  // }
+
+  console.log("newHeight = " + newHeight + " h= "+height/d3.max(levelWidth));
+
+
   var svg = d3.select("svg");
   // declares a tree layout and assigns the resize;
-
+  if(height<newHeight){
+    svg
+      .attr("height", newHeight);
+  }
   // var treemap = d3.tree().size([width - 2, height - 2]);
-  var treemap = d3.tree().size([height - 2, width - 2]).separation(function(a,b){
-        return a.parent==b.parent?1:1
-    });// make separation accessor 1;
+  var treemap = d3
+    .tree()
+    .size([newHeight - 30, width - 2])
+    .separation(function(a, b) {
+      return a.parent == b.parent ? 1 : 1;
+    }); // make separation accessor 1;
   //  assigns the data to a hierarchy using parent-child relationships
   var nodes = treeData;
   // maps the node data to the tree layout
@@ -318,7 +356,7 @@ function draw(treeData, width, height) {
       if (d.data.value) {
         var strokevar;
         if ((d.data.value / 100) * 15 < 0.8) {
-          strokevar = 0.5 ;
+          strokevar = 0.5;
         } else {
           strokevar = (d.data.value / 100) * 15;
         }
@@ -328,11 +366,25 @@ function draw(treeData, width, height) {
       }
     })
     .attr("d", function(d) {
-       return "M" + d.y + "," + d.x
-         + "C" + (d.y + d.parent.y) / 2 + "," + d.x
-         + " " + (d.y + d.parent.y) / 2 + "," + d.parent.x
-         + " " + d.parent.y + "," + d.parent.x;
-       });
+      return (
+        "M" +
+        d.y +
+        "," +
+        d.x +
+        "C" +
+        (d.y + d.parent.y) / 2 +
+        "," +
+        d.x +
+        " " +
+        (d.y + d.parent.y) / 2 +
+        "," +
+        d.parent.x +
+        " " +
+        d.parent.y +
+        "," +
+        d.parent.x
+      );
+    });
 
   // link
   //   .append("text")
@@ -364,7 +416,7 @@ function draw(treeData, width, height) {
       return "node" + (d.children ? " node--internal" : " node--leaf");
     })
     .attr("transform", function(d) {
-      return "translate(" + d.y + "," + d.x+ ")";
+      return "translate(" + d.y + "," + d.x + ")";
     })
     .on("click", function(d) {});
 
@@ -380,9 +432,12 @@ function draw(treeData, width, height) {
   node
     .append("text")
     .attr("dy", ".25em")
-    .attr("x", function(d) { return d.children ? 30 : 13; })
+    .attr("x", function(d) {
+      return d.children ? 30 : 13;
+    })
     .style("text-anchor", function(d) {
-      return d.children ? "end" : "start"; })
+      return d.children ? "end" : "start";
+    })
     .text(function(d) {
       return d.data.id;
     });
