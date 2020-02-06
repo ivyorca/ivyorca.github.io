@@ -138,7 +138,6 @@ function updateData(){
 
   function run(graph) {
     d3.selectAll("g").remove();
-    
     graph.links.forEach(function(d) {
           d.source = d.Source;
           d.target = d.Target;
@@ -237,6 +236,8 @@ function updateData(){
           return d.y;
         })
         .style("font-size", "10px").style("fill", "#333");
+
+
     }
   }
 
@@ -277,6 +278,7 @@ function updateData(){
   }
 
   function eventHandlerFromVA(messageFromVA) {
+    console.log(messageFromVA);
     var arrayData = messageFromVA.data;
     var columnsInfo = messageFromVA.columns;
     network_data=convertData(arrayData, columnsInfo);
@@ -284,6 +286,16 @@ function updateData(){
     updateData();
 
   }
+  if (!inIframe()) {
+    // sample_va();
+    onDataReceived(SAMPLE_MESSAGE);
+  }
+  function inIframe() {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+  }
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
   updateData();
-console.log("CHANGED");
