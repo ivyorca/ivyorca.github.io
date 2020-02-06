@@ -165,8 +165,8 @@ function updateData(){
       // )
       .force('collide', d3.forceCollide(21))
       .force('charge', d3.forceManyBody().strength(-100).distanceMin(10000))
-      .force("yPosition", d3.forceY(function(d){console.log(d);return d.Level*100}).strength(1))
-.force("xPosition", d3.forceY(function(d){console.log(d.source);return d.Level*100}).strength(1))
+      // .force("yPosition", d3.forceY(function(d){console.log(d);return d.Level*100}).strength(1))
+.force("xPosition", d3.forceX(function(d){console.log(d.source);return d.Level*100}).strength(1))
       // 		.force('collide', d3.forceCollide()
       //       .radius(d => 40)
       //       .iterations(2)
@@ -174,12 +174,25 @@ function updateData(){
       .force("center", d3.forceCenter(width / 2, height / 2));
 
     // console.log(graph.links)
+    svg.append('defs').append('marker')
+        .attr("id",'arrowhead')
+        .attr('viewBox','-0 -5 10 10') //the bound of the SVG viewport for the current SVG fragment. defines a coordinate system 10 wide and 10 high starting on (0,-5)
+         .attr('refX',25) // x coordinate for the reference point of the marker. If circle is bigger, this need to be bigger.
+         .attr('refY',0)
+         .attr('orient','auto')
+            .attr('markerWidth',9)
+            .attr('markerHeight',9)
+            .attr('xoverflow','visible')
+        .append('svg:path')
+        .attr('d', 'M 0,-5 L 10 ,0 L 0,5')
+        .attr('fill', '#999')
+        .style('stroke','none');
 
     var link = svg.append("g")
       .style("stroke", "#aaa")
       .selectAll("line")
       .data(graph.links)
-      .enter().append("line");
+      .enter().append("line").attr('marker-end','url(#arrowhead)'); //The marker-end attribute defines the arrowhead or polymarker that will be drawn at the final vertex of the given shape.
 
     var node = svg.append("g")
       .attr("class", "nodes")
@@ -225,7 +238,7 @@ function updateData(){
         });
 
       node
-        .attr("r", 16)
+        .attr("r", 10)
         .style("fill", "#efefef")
         .style("stroke", "#424242")
         .style("stroke-width", "1px")
@@ -238,10 +251,10 @@ function updateData(){
 
       label
         .attr("x", function(d) {
-          return d.x;
+          return d.x -10;
         })
         .attr("y", function(d) {
-          return d.y;
+          return d.y + 17;
         })
         .style("font-size", "10px").style("fill", "#333");
 
