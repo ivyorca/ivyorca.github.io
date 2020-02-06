@@ -153,6 +153,7 @@ function updateData(){
       .force("link", d3.forceLink(graph.links).id(function(d) {
         return d.id;
       }))
+      .force("collide", d3.forceCollide().radius(function(d) { return d.r + 0.5; }).iterations(2))
       //.force("charge", d3.forceManyBody().strength(-200))
       .force('charge', d3.forceManyBody()
         .strength(-200)
