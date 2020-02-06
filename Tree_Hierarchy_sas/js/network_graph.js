@@ -278,10 +278,10 @@ function updateData(){
     var arrayData = messageFromVA.data;
     var columnsInfo = messageFromVA.columns;
     network_data=convertData(arrayData, columnsInfo);
-    console.log("CHANGED");
     console.log(network_data);
     updateData();
 
   }
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
   updateData();
+console.log("CHANGED");
