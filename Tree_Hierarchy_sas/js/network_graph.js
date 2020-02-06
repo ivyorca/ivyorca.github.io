@@ -137,6 +137,8 @@ function updateData(){
   }
 
   function run(graph) {
+    d3.selectAll("g").remove();
+    
     graph.links.forEach(function(d) {
           d.source = d.Source;
           d.target = d.Target;
