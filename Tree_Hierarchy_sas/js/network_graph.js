@@ -277,7 +277,8 @@ function updateData(){
   function eventHandlerFromVA(messageFromVA) {
     var arrayData = messageFromVA.data;
     var columnsInfo = messageFromVA.columns;
-    var network_data=convertData(arrayData, columnsInfo);
+    network_data=convertData(arrayData, columnsInfo);
+    console.log("CHANGED");
     console.log(network_data);
     updateData();
 
